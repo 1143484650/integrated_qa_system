@@ -1,0 +1,10 @@
+{
+  "cssTheme": "Underwater",
+  "theme": "moonstone",
+  "monospaceFontFamily": "JetBrains Mono",
+  "textFontFamily": "霞鹜文楷,等线,微软雅黑,思源黑体 CN",
+  "interfaceFontFamily": "微软雅黑,等线",
+  "baseFontSizeAction": true,
+  "baseFontSize": 16,
+  "accentColor": "#d7bb7e"
+}

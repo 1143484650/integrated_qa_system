@@ -1,0 +1,276 @@
+{
+  "main": {
+    "id": "641a0753f223788c",
+    "type": "split",
+    "children": [
+      {
+        "id": "70d3d23b84f287ab",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e5f3ca5a5f7999fb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "parts/parent_child_chunking.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "parent_child_chunking"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "b375804b1f937ef4",
+    "type": "split",
+    "children": [
+      {
+        "id": "da5f75620dd58baa",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "57b164ab0bf2b669",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "9b5d691c8ca4def7",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": true,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "f36b2c999753ffee",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 321.5
+  },
+  "right": {
+    "id": "5788c38a1dbcac83",
+    "type": "split",
+    "children": [
+      {
+        "id": "5c6bed5ba5b2cab3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "585bb06a2c032eee",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "面试/项目包装/印刷企业内部知识库问答系统_整体包装大纲 - claude.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "印刷企业内部知识库问答系统_整体包装大纲 - claude 的反向链接列表"
+            }
+          },
+          {
+            "id": "76f633102875a28c",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "面试/项目包装/印刷企业内部知识库问答系统_整体包装大纲 - claude.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "印刷企业内部知识库问答系统_整体包装大纲 - claude 的出链列表"
+            }
+          },
+          {
+            "id": "834949ad99c11424",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "a1e37b9dedbd1eed",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "面试/项目包装/印刷企业内部知识库问答系统_整体包装大纲 - claude.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "印刷企业内部知识库问答系统_整体包装大纲 - claude 的大纲"
+            }
+          },
+          {
+            "id": "2b46c32670286755",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          },
+          {
+            "id": "80e988a244824ae4",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "8412d38a300a8ea5",
+            "type": "leaf",
+            "state": {
+              "type": "claudian-view",
+              "state": {},
+              "icon": "bot",
+              "title": "Claudian"
+            }
+          },
+          {
+            "id": "cc6f75e67828188d",
+            "type": "leaf",
+            "state": {
+              "type": "mermaid-toolbar-view",
+              "state": {},
+              "icon": "trident-custom",
+              "title": "Mermaid Toolbar"
+            }
+          }
+        ],
+        "currentTab": 7
+      }
+    ],
+    "direction": "horizontal",
+    "width": 369.5,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "bases:新建数据库": false,
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "terminal:Open terminal": false,
+      "mermaid-tools:Open Mermaid Toolbar": false,
+      "realclaudian:Open Claudian": false
+    }
+  },
+  "active": "e5f3ca5a5f7999fb",
+  "lastOpenFiles": [
+    "parts/ocr_alternatives.md",
+    "parts/ocr.md",
+    "parts/mysql_bm25_redis.md",
+    "parts/hybrid_search.md",
+    "parts/api_interface.md",
+    "拓展/高并发处理演进链路.md",
+    "面试/项目包装/印刷企业内部知识库问答系统_整体包装大纲 - claude.md",
+    "面试/项目包装/印刷企业内部知识库问答系统_文档入库细节与质量把控.md",
+    "面试/MySQL问答系统面试题总结.md",
+    "面试/项目包装/印刷企业内部知识库问答模块_对接接口设计.md",
+    "面试/项目包装/简历.md",
+    "面试/项目包装/简历.md.tmp.9404.8f4a2480ae31",
+    "面试/项目包装/简历.md.tmp.9404.77371790d729",
+    "面试/项目包装/简历优化版.md",
+    "面试/项目包装/简历优化版.md.tmp.37472.073956121049",
+    "面试/项目包装/简历优化版.md.tmp.37472.bdcc68cd3fc1",
+    "面试/简历优化版.md",
+    "面试/项目包装/未命名.md",
+    "面试/项目包装/未命名",
+    "面试/项目包装/印刷企业内部知识库问答系统_整体包装大纲.md",
+    "未命名.base",
+    "面试/项目包装/印刷企业知识库问答系统_架构图.excalidraw",
+    "面试/项目包装/印刷企业知识库问答系统_架构图.excalidraw.tmp.17124.378dd9a35cd8",
+    "面试/项目包装/印刷企业内部知识库问答系统_整体包装大纲 - claude.md.tmp.37864.033c2299b27f",
+    "面试/项目包装/印刷企业内部知识库问答系统_整体包装大纲 - claude.md.tmp.37864.b28eb2a9e483",
+    "面试/项目包装/印刷企业内部知识库问答系统_文档入库细节.md",
+    "面试/项目包装/老文档/印刷企业内部知识库问答系统_代码细节业务讲解.md",
+    "面试/项目包装/老文档/印刷企业内部知识库问答系统_大致流程.md",
+    "面试/项目包装/老文档/印刷企业内部知识库问答系统_整体包装大纲_调整版.md",
+    "面试/项目包装/印刷企业内部知识库问答系统_整体包装大纲 - 副本.md",
+    "10_理论/04_AI理论/10_微调/02-LoRA专题/04-LoRA与SFT指令微调的关系.md",
+    "10_理论/04_AI理论/10_微调/02-LoRA专题/05-LoRA实践配置与常见问题.md",
+    "10_理论/04_AI理论/10_微调/00-大模型微调总结.md",
+    "10_理论/04_AI理论/10_微调/01-大模型微调主要方式/assets/1-1-5.png",
+    "10_理论/04_AI理论/10_微调/01-大模型微调主要方式/assets/1-1-3.png",
+    "10_理论/04_AI理论/10_微调/01-大模型微调主要方式/assets/1-1-1.png",
+    "10_理论/04_AI理论/10_微调/02-LoRA专题/03-QLoRA量化微调原理.md",
+    "10_理论/04_AI理论/10_微调/02-LoRA专题/02-LoRA训练流程与关键参数.md",
+    "10_理论/04_AI理论/10_微调/02-LoRA专题/01-LoRA低秩适配原理.md",
+    "10_理论/04_AI理论/10_微调/01-大模型微调主要方式/assets/ppt2.png",
+    "10_理论/04_AI理论/10_微调/01-大模型微调主要方式/assets/ppt1.png",
+    "10_理论/04_AI理论/10_微调/01-大模型微调主要方式/assets/image-20250816171810374.png",
+    "10_理论/04_AI理论/10_微调/01-大模型微调主要方式/assets/image-20250813175302573.png",
+    "10_理论/04_AI理论/10_微调/01-大模型微调主要方式/assets/image-20250816171535950.png",
+    "10_理论/04_AI理论/10_微调/01-大模型微调主要方式/assets/image-20240805183630239.png",
+    "10_理论/04_AI理论/10_微调/01-大模型微调主要方式/assets/6-7.png",
+    "未命名.canvas",
+    "10_理论/05_学习与课程/练习/未命名.canvas",
+    "20_学习板块/05_学习与课程/练习/未命名.canvas",
+    "10_生活规划_总仓/05_学习与课程/练习/未命名.canvas",
+    "05_学习与课程/练习/未命名.canvas",
+    "Untitled.canvas",
+    "Untitled 1.canvas"
+  ]
+}

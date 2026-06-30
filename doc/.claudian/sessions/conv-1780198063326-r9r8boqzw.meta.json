@@ -1,0 +1,23 @@
+{
+  "id": "conv-1780198063326-r9r8boqzw",
+  "providerId": "claude",
+  "title": "1",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1780198063333,
+  "updatedAt": 1780198267358,
+  "lastResponseAt": 1780198265280,
+  "sessionId": "8bc741ae-93c2-4312-89e6-79ae955342c8",
+  "providerState": {
+    "providerSessionId": "8bc741ae-93c2-4312-89e6-79ae955342c8"
+  },
+  "currentNote": "面试/项目包装/印刷企业内部知识库问答系统_整体包装大纲 - claude.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 0,
+    "percentage": 0
+  }
+}

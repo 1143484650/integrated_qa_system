@@ -1,0 +1,15 @@
+services:
+  mysql:
+    image: docker.m.daocloud.io/mysql:8.0
+
+  redis:
+    image: docker.m.daocloud.io/redis:7-alpine
+
+  etcd:
+    image: docker.m.daocloud.io/quay.io/coreos/etcd:v3.5.18
+
+  minio:
+    image: docker.m.daocloud.io/minio/minio:RELEASE.2024-05-28T17-19-04Z
+
+  milvus:
+    image: docker.m.daocloud.io/milvusdb/milvus:v2.4.15

@@ -1,0 +1,19 @@
+{
+  "activeProfile": {
+    "name": "vault",
+    "modifiedAt": "2026-05-30T08:14:14.749Z"
+  },
+  "profileUpdate": true,
+  "profileUpdateDelay": 800,
+  "uiUpdate": true,
+  "uiUpdateInterval": 1000,
+  "devices": {
+    "36f90d46de2800465c9c1358297e3d3dfb9a9308ec80a6d3dc14960528c51470": "D:\\Program Files\\Losangeles\\Documents\\obconfig"
+  },
+  "statusbarInteraction": {
+    "click": "auto",
+    "ctrl_click": "none",
+    "shift_click": "none",
+    "alt_click": "none"
+  }
+}
