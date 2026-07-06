@@ -1,0 +1,26 @@
+services:
+  ocr-service:
+    image: integrated_qa_ocr:cpu
+    build:
+      context: ./ocr_service
+      args:
+        PYTHON_BASE_IMAGE: ${OCR_PYTHON_BASE_IMAGE:-python:3.10-slim}
+        HTTP_PROXY: ${HTTP_PROXY:-}
+        HTTPS_PROXY: ${HTTPS_PROXY:-}
+        NO_PROXY: ${NO_PROXY:-localhost,127.0.0.1,ocr-service,mysql,redis,milvus,minio,etcd}
+    container_name: integrated_qa_ocr
+    restart: unless-stopped
+    environment:
+      OCR_USE_GPU: "false"
+    ports:
+      - "8010:8010"
+    volumes:
+      - ocr_models:/root/.paddleocr
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8010/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  ocr_models:

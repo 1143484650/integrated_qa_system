@@ -13,3 +13,8 @@ services:
 
   milvus:
     image: docker.m.daocloud.io/milvusdb/milvus:v2.4.15
+
+  ocr-service:
+    build:
+      args:
+        PYTHON_BASE_IMAGE: docker.1ms.run/library/python:3.10-slim

@@ -1,6 +1,6 @@
 import os
 from typing import Iterator
-from edu_ocr import get_ocr
+from edu_ocr import get_ocr, extract_text_and_score, parse_with_ocr_service
 from langchain_core.documents import Document
 from langchain_core.document_loaders import BaseLoader
 
@@ -23,18 +23,35 @@ class OCRIMGLoader(BaseLoader):
         When you're implementing lazy load methods, you should use a generator
         to yield documents one by one.
         """
-
-        line = self.img2text()
-        yield Document(page_content=line, metadata={"source": self.img_path})
+        line, score, parse_method = self.img2text()
+        metadata = {"source": self.img_path, "parse_method": parse_method}
+        if score is not None:
+            metadata["ocr_confidence"] = round(score, 4)
+        yield Document(page_content=line, metadata=metadata)
 
     def img2text(self):
-        resp = ""
-        ocr = get_ocr()
-        result, _ = ocr(self.img_path)
-        if result:
-            ocr_result = [line[1] for line in result]
-            resp += "\n".join(ocr_result)
-        return resp
+        service_result = parse_with_ocr_service(self.img_path)
+        if service_result:
+            return (
+                service_result.get("text", ""),
+                service_result.get("ocr_confidence"),
+                service_result.get("parse_method", "ppstructure-service"),
+            )
+
+        import cv2
+
+        img = cv2.imread(self.img_path)
+        if img is None:
+            return "", None, "ppstructure"
+
+        ocr = get_ocr(backend="ppstructure")
+        result = ocr(img)
+        parse_method = "ppstructure"
+        if isinstance(result, tuple):
+            result = result[0]
+            parse_method = "rapidocr"
+        text, score = extract_text_and_score(result)
+        return text, score, parse_method
 
 
 if __name__ == '__main__':

@@ -5,13 +5,14 @@ import numpy as np
 from PIL import Image
 from tqdm import tqdm
 from typing import Iterator
-from edu_ocr import get_ocr
+from edu_ocr import get_ocr, extract_text_and_score, parse_array_with_ocr_service
 from langchain_core.documents import Document
 from langchain_core.document_loaders import BaseLoader
 from langchain.text_splitter import CharacterTextSplitter
 # PDF OCR 控制：只对宽高超过页面一定比例（图片宽/页面宽，图片高/页面高）的图片进行 OCR。
 # 这样可以避免 PDF 中一些小图片的干扰，提高非扫描版 PDF 处理速度
 PDF_OCR_THRESHOLD = (0.6, 0.6)
+PDF_TEXT_THRESHOLD = 30
 
 
 class OCRPDFLoader(BaseLoader):
@@ -33,44 +34,50 @@ class OCRPDFLoader(BaseLoader):
         to yield documents one by one.
         """
 
-        line = self.pdf2text()
-        yield Document(page_content=line, metadata={"source": self.file_path})
+        line, metadata = self.pdf2text()
+        yield Document(page_content=line, metadata=metadata)
 
 
 
     def pdf2text(self):
-        ocr = get_ocr()
+        rapid_ocr = get_ocr()
+        structure_ocr = None
         # 打开pdf文件
         doc = fitz.open(self.file_path)
-        ## 获取页数
-        # print(f'len(doc)-->{len(doc)}')
-        resp = ""
+        resp = []
+        scores = []
+        parse_methods = set()
         b_unit = tqdm(total=doc.page_count, desc="OCRPDFLoader context page index: 0")
         for i, page in enumerate(doc):
             b_unit.set_description("OCRPDFLoader context page index: {}".format(i))
             b_unit.refresh()
-            # 提取文本：默认使用 "text" 模式提取文本。
-            # text = page.get_text("")
-            text = page.get_text("text")
-            resp += text + "\n"
-            # print(f'resp-->{resp}')
-            # 获取图片：获得所有显示的图像的元信息列表。
-            # 它适用于所有文档类型，不仅限于 PDF。
+            text = page.get_text("text").strip()
             img_list = page.get_image_info(xrefs=True)
-            # print(f'img_list--》{img_list}')
-            # print(f'img_list--》{len(img_list)}')
+
+            if self._should_use_ppstructure(text, img_list, page):
+                if structure_ocr is None:
+                    structure_ocr = get_ocr(backend="ppstructure")
+                page_text, page_score, parse_method = self._extract_page_with_ppstructure(page, structure_ocr)
+                if page_text:
+                    resp.append(page_text)
+                if page_score is not None:
+                    scores.append(page_score)
+                parse_methods.add(parse_method)
+                b_unit.update(1)
+                continue
+
+            if text:
+                resp.append(text)
+                parse_methods.add("text")
+
             for img in img_list:
-                # xref一种编号，指向该图像对象在PDF文件中的位置，程序可以通过这个编号快速定位和提取图像数据。
                 if xref := img.get("xref"):
-                    # 图像在页面上的位置和尺寸。
                     bbox = img["bbox"]
-                    # 检查图片尺寸是否超过设定的阈值
                     if ((bbox[2] - bbox[0]) / (page.rect.width) < PDF_OCR_THRESHOLD[0]
                             or (bbox[3] - bbox[1]) / (page.rect.height) < PDF_OCR_THRESHOLD[1]):
                         continue
                     pix = fitz.Pixmap(doc, xref)
-                    # print(f'page.rotation-->{page.rotation}')
-                    if int(page.rotation) != 0:  # 如果Page有旋转角度，则旋转图片
+                    if int(page.rotation) != 0:
                         img_array = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width, -1)
                         tmp_img = Image.fromarray(img_array)
                         ori_img = cv2.cvtColor(np.array(tmp_img), cv2.COLOR_RGB2BGR)
@@ -79,15 +86,57 @@ class OCRPDFLoader(BaseLoader):
                     else:
                         img_array = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width, -1)
 
-                    # result：包含了图像中检测到的所有文本框的位置、文本内容和置信度信息。
-                    # _：它是一个包含了时间数据的列表，可以用于优化模型运行速度。
-                    result, _ = ocr(img_array)
-                    if result:
-                        ocr_result = [line[1] for line in result]
-                        resp += "\n".join(ocr_result)
-            # 更新进度
+                    result, _ = rapid_ocr(img_array)
+                    image_text, image_score = extract_text_and_score(result)
+                    if image_text:
+                        resp.append(image_text)
+                        parse_methods.add("rapidocr")
+                    if image_score is not None:
+                        scores.append(image_score)
             b_unit.update(1)
-        return resp
+
+        metadata = {"source": self.file_path, "parse_method": "+".join(sorted(parse_methods or {"text"}))}
+        if scores:
+            metadata["ocr_confidence"] = round(sum(scores) / len(scores), 4)
+        return "\n".join(resp), metadata
+
+    def _should_use_ppstructure(self, text, img_list, page):
+        if len(text) < PDF_TEXT_THRESHOLD:
+            return True
+        for img in img_list:
+            bbox = img.get("bbox")
+            if not bbox:
+                continue
+            width_ratio = (bbox[2] - bbox[0]) / page.rect.width
+            height_ratio = (bbox[3] - bbox[1]) / page.rect.height
+            if width_ratio >= PDF_OCR_THRESHOLD[0] and height_ratio >= PDF_OCR_THRESHOLD[1]:
+                return True
+        return False
+
+    def _extract_page_with_ppstructure(self, page, ocr):
+        img = self._render_page_image(page)
+        service_result = parse_array_with_ocr_service(img)
+        if service_result:
+            return (
+                service_result.get("text", ""),
+                service_result.get("ocr_confidence"),
+                service_result.get("parse_method", "ppstructure-service"),
+            )
+
+        result = ocr(img)
+        parse_method = "ppstructure"
+        if isinstance(result, tuple):
+            result = result[0]
+            parse_method = "rapidocr"
+        text, score = extract_text_and_score(result)
+        return text, score, parse_method
+
+    def _render_page_image(self, page):
+        pix = page.get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False)
+        if pix.width > 2000 or pix.height > 2000:
+            pix = page.get_pixmap(matrix=fitz.Matrix(1, 1), alpha=False)
+        img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+        return cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
 
     def rotate_img(self, img, angle):
         '''
